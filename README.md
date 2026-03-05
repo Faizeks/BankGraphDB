@@ -1,95 +1,66 @@
 # BankGraphDB
 
-Graph database project using Neo4j to model banking transactions and relationships between customers, accounts, and merchants.
+Graph database project using **Neo4j** to model banking transactions and relationships between **customers, accounts, and merchants**.
+
+This project demonstrates how graph databases can represent financial transaction networks and help analyze interactions between entities in a banking ecosystem.
 
 ---
 
 ## Project Overview
 
-BankGraphDB demonstrates how graph databases can represent financial transaction networks.
-Using Neo4j, this project models relationships between customers, accounts, and merchants to analyze financial interactions.
+BankGraphDB models financial transaction relationships using a graph data model. Customers own accounts, accounts can transfer funds to other accounts, and accounts can make payments to merchants.
 
-Graph databases are particularly useful for detecting patterns in complex relationships such as financial fraud, transaction networks, and account connections.
+By representing these entities and relationships as a graph, it becomes easier to explore transaction patterns, analyze financial interactions, and understand how money flows within the system.
+
+Graph databases are particularly useful for identifying complex patterns such as transaction networks, financial behavior analysis, and potential fraud detection.
 
 ---
 
 ## Technologies Used
 
-* Python
-* Neo4j
-* Cypher Query Language
-* CSV datasets
+- Python  
+- Neo4j Graph Database  
+- Cypher Query Language  
+- CSV Datasets  
 
 ---
 
 ## Graph Data Model
 
-This project models financial entities as nodes and relationships.
+This project models financial entities as nodes and their interactions as relationships.
 
 ### Nodes
 
-* Customer
-* Account
-* Merchant
+- Customers
+- Accounts
+- Merchants
 
 ### Relationships
 
-Customer → OWNS → Account
-Account → TRANSFER → Account
-Account → PAYMENT → Merchant
+- **OWNS** → connects customers to their accounts  
+- **TRANSFERRED_TO** → represents money transfers between accounts  
+- **PAID_TO** → represents payments from accounts to merchants  
 
 ---
 
-## Example Cypher Query
+## Graph Visualization
 
-Find transfers between accounts:
+Below is the visualization of the banking transaction graph.
+
+![Graph Visualization](graph_visualization.png)
+
+---
+
+## Business Questions
+
+### 1. Most Active Customers
+
+Identify customers with the highest number of transfers.
+
+Query:
 
 ```cypher
-MATCH (a:Account)-[t:TRANSFER]->(b:Account)
-RETURN a, b, t
-LIMIT 10
-```
-
-Find payments to merchants:
-
-```cypher
-MATCH (a:Account)-[:PAYMENT]->(m:Merchant)
-RETURN a, m
-LIMIT 10
-```
-
----
-
-## Dataset
-
-The project uses CSV datasets to populate the graph database:
-
-* customers.csv
-* accounts.csv
-* merchants.csv
-* transactions.csv
-
----
-
-## Running the Project
-
-Install dependencies:
-
-```
-pip install -r requirements.txt
-```
-
-Run the script:
-
-```
-python BankGraph.py
-```
-
----
-
-## Potential Use Cases
-
-* Fraud detection
-* Transaction network analysis
-* Financial relationship discovery
-* Graph-based financial analytics
+MATCH (c:Customers)-[:OWNS]->(a:Accounts)-[:TRANSFERRED_TO]->()
+RETURN c.name AS customer, COUNT(*) AS total_transfers
+ORDER BY total_transfers DESC
+LIMIT 5
