@@ -47,7 +47,7 @@ This project models financial entities as nodes and their interactions as relati
 
 Below is the visualization of the banking transaction graph.
 
-![Graph Visualization](graph_visualization.png)
+![Graph Visualization](images/graph_visualization.png)
 
 ---
 
@@ -64,3 +64,5 @@ MATCH (c:Customers)-[:OWNS]->(a:Accounts)-[:TRANSFERRED_TO]->()
 RETURN c.name AS customer, COUNT(*) AS total_transfers
 ORDER BY total_transfers DESC
 LIMIT 5
+```
+![Most Active Customers](images/most_active_customers.png)
