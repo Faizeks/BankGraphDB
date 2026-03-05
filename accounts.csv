@@ -1,7 +1,0 @@
-account_id,customer_id,account_type,balance
-A001,C001,Savings,15000000
-A002,C002,Checking,8000000
-A003,C003,Savings,25000000
-A004,C004,Business,120000000
-A005,C001,Checking,5000000
-A006,C005,Savings,9000000
